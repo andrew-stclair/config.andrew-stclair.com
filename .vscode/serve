@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd $GITHUB_WORKSPACE
+for folder in $(find src -type d)
+do
+cd $GITHUB_WORKSPACE/$folder
+echo -e "---json\n{\"pagedata\": $(tree -J -L 1 --noreport --charset utf-8 -shD)}\n---\n$(cat $GITHUB_WORKSPACE/index.template)" > $GITHUB_WORKSPACE/$folder/index.njk
+done
+cd $GITHUB_WORKSPACE
+npx @11ty/eleventy --input=$GITHUB_WORKSPACE/src --output=$GITHUB_WORKSPACE/build --config=$GITHUB_WORKSPACE/src/.eleventy.js --serve --port=8081
+find $GITHUB_WORKSPACE -name index.njk -delete

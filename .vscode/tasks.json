@@ -1,0 +1,40 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "command": "bash",
+    "args": [
+        "-c"
+    ],
+    "tasks": [
+        {
+            "label": "11ty: Build",
+            "type": "shell",
+            "args": [
+                "npx @11ty/eleventy --input=src --output=build --config=src/.eleventy.js"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "11ty: Serve",
+            "type": "shell",
+            "args": [
+                "${workspaceFolder}/.vscode/serve"
+            ],
+            "problemMatcher": [],
+            "options": {
+                "env": {
+                    "GITHUB_WORKSPACE": "${workspaceFolder}"
+                }
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
