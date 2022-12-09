@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <title>D&D - Index of {{ page.url }}</title>
+    <style>
+        .file:before {
+            content: "📄";
+            padding-right: 0px;
+        }
+
+        .directory:before {
+            content: "📂";
+            padding-right: 0px;
+        }
+
+        .back:before {
+            content: "↩️";
+            padding-right: 0px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead tr {
+            background: rgb(194, 194, 194);
+        }
+
+        tbody tr:nth-child(odd) {
+            background: rgb(243, 243, 243);
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgb(221, 221, 221);
+        }
+    </style>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <h1>Index of {{ page.url }}</h1>
+    <hl />
+    <table>
+        <thead>
+            <tr>
+                <td>File name</td>
+                <td>Size</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% if not page.url in "/" %}
+            <tr>
+                <td class="back" colspan=2><a href="..">Up one level</a></td>
+            </tr>
+            {% endif %}
+            {%- for item in pagedata[0].contents %}
+            <tr>
+                <td class="{{ item.type }}"><a href="{{ item.name }}">{{ item.name }}</a></td>
+                <td style="width:60px;">{{ item.size }}</td>
+            </tr>
+            {%- endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
