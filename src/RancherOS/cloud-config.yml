@@ -1,3 +1,38 @@
 #cloud-config
 ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDP7UK1Qt4OxQOIVTi0C09echMlJsm8zW7Y4U1tbsSCdEr+v6lNJs9MyP4Fh7oAgjCtM0iqpd+KzCIl8uTgDLYcBYNaVgc3BXYtRkXVdSlPYjZXuyZdVL8yn06mVKUvYV+QRKQJXpQN+2KWIeo+RGFtskYEs1jEV0hd3r5Noq75eHqC+a4NLeBg/8HEQFprFhOXv85KW9IzFXTpHUnrKBaYH/TbcyGYeyh/dNiUQtJLmEpJQojipqTZhFxq4Zh/EuKYlUoeZ/EVM49oB01qKeBt0LzqhxmFnHODaE3qkkqRVOfRpegfSkU6xAe2xSyrUt6cy/2vqB60UVnGwCiEt4N8Xjzg1jEyLl8uygqSUl5luJIl2EYFlo3ljrguTmGTaH0WXgcgEk7vfZdwQUY5tfh+oiHATXYLOmH5DONRsbcWczRl7YBaL47/GoRx9ipI1xnOYvsSCYT5Bv1NQ1D6rklSGMgLLZKAQuJup/b5Ii9wgrRjT5NUf1Fu4TAcL+sKxUc= andre@Gaming-PC
+rancher:
+  docker:
+    tls: true
+  network:
+    dns:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+      - 1.1.1.1
+      - 1.0.0.1
+write_files:
+  - container: ntp
+    path: /etc/ntp.conf
+    permissions: "0644"
+    owner: root
+    content: |
+      server 0.pool.ntp.org iburst
+      server 1.pool.ntp.org iburst
+      server 2.pool.ntp.org iburst
+      server 3.pool.ntp.org iburst
+
+      # Allow only time queries, at a limited rate, sending KoD when in excess.
+      # Allow all local queries (IPv4, IPv6)
+      restrict default nomodify nopeer noquery limited kod
+      restrict 127.0.0.1
+      restrict [::1]
+    - path: /etc/rc.local
+    permissions: "0755"
+    owner: root
+    content: |
+      #!/bin/bash
+      wait-for-docker
+      docker volume create portainer_data
+      docker run -d -p 8000:8000 -p 9443:9443 -p 9000:9000 --name portainer --restart=always -e TZ=Australia/Melbourne -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+      docker run -d --name watchtower -v /var/run/docker.sock:/var/run/docker.sock -e TZ=Australia/Melbourne --restart=always containrrr/watchtower --cleanup --schedule "0 0 4 * * *"
