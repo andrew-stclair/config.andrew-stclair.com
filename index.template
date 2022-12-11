@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>D&D - Index of {{ page.url }}</title>
+    <title>Configs - Index of {{ page.url }}</title>
     <style>
         .file:before {
             content: "📄";
