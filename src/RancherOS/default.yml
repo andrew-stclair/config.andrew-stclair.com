@@ -28,7 +28,7 @@ write_files:
       restrict default nomodify nopeer noquery limited kod
       restrict 127.0.0.1
       restrict [::1]
-    - path: /etc/rc.local
+  - path: /etc/rc.local
     permissions: "0755"
     owner: root
     content: |
