@@ -34,8 +34,7 @@ write_files:
     content: |
       #!/bin/bash
       wait-for-docker
-      docker volume create portainer_data
-      docker run -d -p 8000:8000 -p 9443:9443 -p 9000:9000 --name portainer --restart=always -e TZ=Australia/Melbourne -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
-      docker run -d --name watchtower -v /var/run/docker.sock:/var/run/docker.sock -e TZ=Australia/Melbourne --restart=always containrrr/watchtower --cleanup --schedule "0 0/10 * * * *"
+      docker run -d -p 8000:8000 -p 9443:9443 -p 9000:9000 --name portainer --restart=always -e TZ=Australia/Melbourne -v /var/run/docker.sock:/var/run/docker.sock -v $(docker volume create portainer_data):/data portainer/portainer-ce:latest
+      docker run -d --name watchtower -v /var/run/docker.sock:/var/run/docker.sock -e TZ=Australia/Melbourne --restart=always containrrr/watchtower --cleanup --interval 900
       docker run -d -p 69:69/udp --name tftp --restart=always -e TZ=Australia/Melbourne ghcr.io/andrew-stclair/ipxe-binaries:latest
-      docker run -d -p 80:80 --name netboot-cache --restart=always -e TZ=Australia/Melbourne ghcr.io/andrew-stclair/netboot-cache:latest
+      docker run -d -p 80:80 --name netboot-cache --restart=always -e TZ=Australia/Melbourne -v $(docker volume create cache):/cache ghcr.io/andrew-stclair/netboot-cache:latest
