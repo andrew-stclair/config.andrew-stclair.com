@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "@11ty/eleventy": "^3.0.0-alpha.13",
+        "@11ty/eleventy": "^3.0.0-alpha.14",
         "@11ty/eleventy-plugin-directory-output": "^1.0.1"
     }
 }
