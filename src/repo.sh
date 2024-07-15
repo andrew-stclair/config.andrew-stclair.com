@@ -3,6 +3,7 @@
 echo "Installing GPG Public Key"
 gpg --dearmor -o /etc/apt/trusted.gpg.d/andrew-stclair-keyring.gpg << EndOfMessage
 -----BEGIN PGP PUBLIC KEY BLOCK-----
+
 mQINBGWXbFMBEADAcCiOGQDOlVFUkoyNX4P7jJHZ4AMaHXKKfuG5gv92KbLBvGfU
 sG1R+i32h6rmtyMpIjp4vLLxOAPfYIuGdaY30ChVTvRH9m+hP2Ky5sB+LJSrwX9j
 Jgeh3H4TRm2EqslnY/84HyxxGJRIySebOLi15/O2vROdneTzVItNeaS3J2XQvDaW
