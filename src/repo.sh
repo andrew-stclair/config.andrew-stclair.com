@@ -33,8 +33,13 @@ Xg8Tez+4OLwEqqqL/zpfTZ5+Z16ToHC7jf8xflk48FVqErYPSOigUD+pEiOxx8WT
 EndOfMessage
 
 echo "Setting up apt list"
-cat > /etc/apt/sources.list.d/andrew-stclair.list << EndOfMessage
-deb https://repo.andrew-stclair.com/repository/apt-hosted/ bookworm main
+cat > /etc/apt/sources.list.d/andrew-stclair.sources << EndOfMessage
+Enabled: yes
+Types: deb
+URIs: https://repo.andrew-stclair.com/repository/apt-hosted/
+Suites: bookworm
+Components: main
+Signed-By: /etc/apt/trusted.gpg.d/andrew-stclair-keyring.gpg
 EndOfMessage
 
 echo "Swapping out debian mirrors"
