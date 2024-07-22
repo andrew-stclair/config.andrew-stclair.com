@@ -38,7 +38,4 @@ deb https://repo.andrew-stclair.com/repository/apt-hosted/ bookworm main
 EndOfMessage
 
 echo "Swapping out debian mirrors"
-sed 's|http://[a-z]*.debian.org/debian|https://repo.andrew-stclair.com/repository/debian|g' -i /etc/apt/sources.list
-sed 's|https://[a-z]*.debian.org/debian|https://repo.andrew-stclair.com/repository/debian|g' -i /etc/apt/sources.list
-sed 's|http://[a-z]*.debian.org/debian|https://repo.andrew-stclair.com/repository/debian|g' -i /etc/apt/sources.list.d/*
-sed 's|https://[a-z]*.debian.org/debian|https://repo.andrew-stclair.com/repository/debian|g' -i /etc/apt/sources.list.d/*
+find /etc/apt -name "*.list" -or -name "*.sources" -type f -exec sed -r 's|https?://[a-z]*.debian.org/debian|https://repo.andrew-stclair.com/repository/debian|g' -i {} \;
